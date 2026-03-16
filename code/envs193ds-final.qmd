@@ -1,0 +1,20 @@
+---
+title: "ENVS193ds-final"
+author: "Valeria Fierros"
+date: "due: 2026-03-17"
+format: html
+editor: visual
+---
+
+[Link to final GitHub Repo](https://github.com/valeriafierros/ENVS-193DS_winter-2026_final.git)
+
+```{r}
+#| label: set up
+#| message: false
+#| warning: false
+
+
+
+```
+
+# Problem 1: Research writing
