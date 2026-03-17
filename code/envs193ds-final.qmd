@@ -2,19 +2,153 @@
 title: "ENVS193ds-final"
 author: "Valeria Fierros"
 date: "due: 2026-03-17"
-format: html
+format: 
+  html: 
+    toc: true
+execute: 
+  message: false
+  warning: false
 editor: visual
 ---
 
-[Link to final GitHub Repo](https://github.com/valeriafierros/ENVS-193DS_winter-2026_final.git)
+[Final GitHub Repo](https://github.com/valeriafierros/ENVS-193DS_winter-2026_final.git)
+
+# Set up
 
 ```{r}
 #| label: set up
-#| message: false
-#| warning: false
 
+#reading in packages here
+library(tidyverse)
+library(janitor)
+library(dplyr)
+library(ggplot2)
+
+#reading in data here for problem 2
+kelp <- read.csv("../data/kelp_data.csv")
+mopl <- read.csv("../data/mopl.csv")
+```
+
+# Problem 1: Research writing
+
+## 1a. Transparent statistical methods
+
+In part 1, they used a simple linear regression to determing whether precipitation predicts wetland flooding. In part 2, they used a Kruskal-Wallist test to determine whether median flooded wetland area differs across various levels of water year classifications.
+
+##1b. Figure needed They can use a boxplot to visualize these results. Because there are multiple predictors/levels, the x-axis should show the water year classification categories (wet, above normal, below normal, dry, critical drought). The y-axis should show the response variable, which would be flooded wetland area (m²). Each category on the x-axis would have its own boxplot to display the interquartile range, median, and spread of the data.
+
+## c. Suggestions for rewriting
+
+(1) Precipitation was not a strong predictor of flooded wetland area in the San Joaquin River Delta (simple linear regression, F(df model, df error) = test statistic, $R^2$ = effect size, p = 0.11, $\alpha$ = significance level).
+
+(2) There is no significant difference in median flooded wetland areas between water year classifications (wet, above normal, below normal, dry, critical drought)(Kruskal-Wallis test, $X^2$(4) = test statistic,p = 0.12, $\alpha$ = significance level).
+
+## d. Interpretation
+Another variable that could influence the flooded area of a wetland is local wetland management practices. This variable would be categorical (managed vs unmanaged) or ordinal (levels of management/intervention). It could influence flooding because management decisions can directly influence water flow and retention in wetlands. For example, higher water retention due to lack of vegetation in wetlands would increase flooding.
+
+# Problem 2. Data visualization
+## 2a. Cleaning and summarizing
+
+```{r}
+#| label: cleaning data
+
+#cleaning data for problem 2
+kelp_clean <- kelp |> 
+  clean_names() |> 
+  filter(site %in% c("IVEE", "NAPL", "CARP")) |> 
+  filter(!(date =="2000-09-22" & transect == "6" & quad == "40")) |> 
+  mutate(site_name = case_when(
+    site == "NAPL" ~"Naples",
+    site == "IVEE" ~ "Isla Vista",
+    site == "CARP" ~ "Carpinteria")) |> 
+  mutate(site_name = as_factor(site_name),
+         site_name = fct_relevel(site_name,
+                                 "Naples", "Isla Vista", "Carpinteria")) |> 
+  group_by(site_name, year) |> 
+  summarize(mean_fronds = mean(fronds)) |> 
+  ungroup()
+
+#checking data
+slice_sample(kelp_clean,
+             n = 5)
+str(kelp_clean)
+```
+
+## 2b. Understanding data
+This line filters out frond observations from this date in transect 6 in quad 4 because there is a missing value there; they are input as -99999, which represents no observation. This information can be found on the data page under the files and data links tab under FRONDS. 
+
+
+## 2c. Visualize the data
+
+```{r}
+#| label: recreating visualization
+#| fig-height: 5
+#| fig-width: 8
+
+#base layer
+ggplot(data = kelp_clean, #using kelp_clean data
+       aes(x = year, #setting x axis
+           y = mean_fronds, #setting y axis
+           color = site_name))+ #color by each site 
+  geom_line(size = 0.3)+ #connecting points with a line and setting line size
+  geom_point()+ # adding individual data points
+  scale_color_manual(values = c( # setting manual colors
+    "Naples" = "cadetblue", #naples color
+    "Isla Vista" = "coral", #IV color
+    "Carpinteria" = "blue4" #carp color
+  ))+
+  labs(title = "Sites vary in mean kelp fronds per year", #adding title
+       x = "Year", #labelling x axis
+       y = "Mean kelp fronds per year", #labelling y axis
+       color = "Site")+ #renamind legend
+  theme_minimal()+ #changing theme
+  theme(plot.title = element_text(hjust = 0.5), #centering the title
+        text = element_text(family = "sans"), # using custom font
+        panel.border = element_blank()) #making panel background blank
 
 
 ```
 
-# Problem 1: Research writing
+## 2d. Interpretation
+
+Isla vista has the most variable mean kelp fronds per year; its line shows the largest fluctuations over time with the strongest peaks and dips. The maximum points goes all the way up to ~ 40 while the minimum dips down to less than five. The site with the least variable mean kelp fronds per year is Carpinteria. The points from this site have less variation and a smaller range, with less dramatic peaks occurring. Each observation remains between the same range (~5-20). 
+
+# Problem 3. Data analysis
+## 3a. Response variable
+In this data set, the 1s and 0s represent mountain plover presence/absence at a given nesting site when surveyed. A 1 means the species was observed while a 0 means there was no plover present at the time of the survey. 
+
+## 3b. Purpose of study
+
+## 3c. Table of models
+
+## 3d. Run the models
+
+## 3e. Select the best model
+
+## 3f. Check the diagnostics
+
+## 3g. Visualize the model predictions
+
+## 3h. Write a caption for your figure
+
+## 3i. Calculate model predictions
+
+## 3j. Interpret your results
+
+# Problem 4. Affective and exploratory visualizations
+
+## 4a. Comparing visualizations
+
+## 4b. Designing an analysis
+
+## 4c. Check any assumptions and run your analysis
+
+## 4d. Create a visualiztion
+
+## 4e. Write a caption
+
+## 4f. Write about your results
+
+## 4g. Sharing your affective visualization
+
+\~ done :) \~
