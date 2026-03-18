@@ -22,6 +22,9 @@ editor: visual
 library(tidyverse)
 library(janitor)
 library(ggplot2)
+library(MuMIn)
+library(DHARMa)
+library(ggeffects)
 
 #reading in data here for problem 2
 kelp <- read.csv("../data/kelp_data.csv")
@@ -172,10 +175,36 @@ mod3 <- glm(used_bin ~ vo_nest,
 
 
 ## 3e. Select the best model
+```{r}
+#| label: running AICc
+
+AICc(mod0, mod1, mod2, mod3) |> 
+  arrange(AICc)
+
+```
+The best model was determined by Akaike's Information Criterion (AIC) to be model 3, which has a score of 331.81. This model only has visual obstruction as its predictor variable and Mountain Plover nest presence/use as its response variable; therefore, Mountain Plover nesting is best predicted by visual obstructions. 
 
 ## 3f. Check the diagnostics
+```{r}
+#| label: checking diagnostics
+#| fig-height: 6
+#| fig-width: 8
+
+plot(simulateResiduals(mod3))
+
+```
+
 
 ## 3g. Visualize the model predictions
+```{r}
+#| label: visualizing model prediction
+
+mod_preds <- ggpredict(mod3,
+                       terms = "vo_nest")
+
+```
+
+
 
 ## 3h. Write a caption for your figure
 
