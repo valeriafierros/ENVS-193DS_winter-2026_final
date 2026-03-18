@@ -44,9 +44,11 @@ In part 1, they used a simple linear regression to determing whether precipitati
 (2) There is no significant difference in median flooded wetland areas between water year classifications (wet, above normal, below normal, dry, critical drought)(Kruskal-Wallis test, $X^2$(4) = test statistic,p = 0.12, $\alpha$ = significance level).
 
 ## d. Interpretation
+
 Another variable that could influence the flooded area of a wetland is local wetland management practices. This variable would be categorical (managed vs unmanaged) or ordinal (levels of management/intervention). It could influence flooding because management decisions can directly influence water flow and retention in wetlands. For example, higher water retention due to lack of vegetation in wetlands would increase flooding.
 
 # Problem 2. Data visualization
+
 ## 2a. Cleaning and summarizing
 
 ```{r}
@@ -75,8 +77,8 @@ str(kelp_clean)
 ```
 
 ## 2b. Understanding data
-This line filters out frond observations from this date in transect 6 in quad 4 because there is a missing value there; they are input as -99999, which represents no observation. This information can be found on the data page under the files and data links tab under FRONDS. 
 
+This line filters out frond observations from this date in transect 6 in quad 4 because there is a missing value there; they are input as -99999, which represents no observation. This information can be found on the data page under the files and data links tab under FRONDS.
 
 ## 2c. Visualize the data
 
@@ -111,26 +113,28 @@ ggplot(data = kelp_clean, #using kelp_clean data
 
 ## 2d. Interpretation
 
-Isla vista has the most variable mean kelp fronds per year; its line shows the largest fluctuations over time with the strongest peaks and dips. The maximum points goes all the way up to ~ 40 while the minimum dips down to less than five. The site with the least variable mean kelp fronds per year is Carpinteria. The points from this site have less variation and a smaller range, with less dramatic peaks occurring. Each observation remains between the same range (~5-20). 
+Isla vista has the most variable mean kelp fronds per year; its line shows the largest fluctuations over time with the strongest peaks and dips. The maximum points goes all the way up to \~ 40 while the minimum dips down to less than five. The site with the least variable mean kelp fronds per year is Carpinteria. The points from this site have less variation and a smaller range, with less dramatic peaks occurring. Each observation remains between the same range (\~5-20).
 
 # Problem 3. Data analysis
+
 ## 3a. Response variable
-In this data set, the 1s and 0s represent mountain plover presence/absence at a given nesting site when surveyed. A 1 means the species was observed while a 0 means there was no plover present at the time of the survey. 
+
+In this data set, the 1s and 0s represent mountain plover presence/absence at a given nesting site when surveyed. A 1 means the species was observed while a 0 means there was no plover present at the time of the survey.
 
 ## 3b. Purpose of study
-- effects of visual obstruction and distance to prairie dog colony edge
-- describe: 
-1. what kind of variable it is
-2. how it could possibly influence the probability of mountain plover nest site use (as visual obstruction increases, the probability of Mountain Plover nest site use ____ because)
-3. where did i find this info? (section, subsection, and paragraph)
 
-**Visual obstruction**
-Visual obstruction is a continuous variable where each observation is an individual measurement, explained in the data collection subsection of the methods section in paragraph 3. As visual obsruction increases, the probability of Mountain Plover nest site use decreases because Mountain Plovers tend to prefer flat landscapes with bare ground exposure and sparse vegetation (found in paragraph 2 of the introduction). 
+**Visual obstruction** Visual obstruction is a continuous variable where each observation is an individual measurement, explained in the data collection subsection of the methods section in paragraph 3. As visual obsruction increases, the probability of Mountain Plover nest site use decreases because Mountain Plovers tend to prefer flat landscapes with bare ground exposure and sparse vegetation (found in paragraph 2 of the introduction).
 
-**Distance to prairie dog colony edge**
-Distance to prairie dog colony edge is also a continuous variable, found in the modeling framework subsection of the methods section in paragraph 1. As distance to colony edge increases, the probability of Mountain Plover nest site decreases 
+**Distance to prairie dog colony edge** Distance to prairie dog colony edge is also a continuous variable, found in the modeling framework subsection of the methods section in paragraph 1. As distance to colony edge increases, the probability of Mountain Plover nest site decreases because vegetation height and shrub cover are higher outside of prarie dog colonies where Mountain Plovers prefer to nest (found in the 3rd paragraph of the discussion).
 
 ## 3c. Table of models
+
+| Model number | Visual Obstruction | Distance to Colony | Model Description |
+|-----------------|:-----------------:|:-----------------:|:----------------:|
+| 0 |  |  | no predictors( null model) |
+| 1 | X | X | all predictors (saturated model) |
+| 2 |  | X | distance to prairie dog colony only |
+| 3 | X |  | visual obstruction only |
 
 ## 3d. Run the models
 
