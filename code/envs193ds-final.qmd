@@ -21,7 +21,6 @@ editor: visual
 #reading in packages here
 library(tidyverse)
 library(janitor)
-library(dplyr)
 library(ggplot2)
 
 #reading in data here for problem 2
@@ -123,9 +122,9 @@ In this data set, the 1s and 0s represent mountain plover presence/absence at a 
 
 ## 3b. Purpose of study
 
-**Visual obstruction** Visual obstruction is a continuous variable where each observation is an individual measurement, explained in the data collection subsection of the methods section in paragraph 3. As visual obsruction increases, the probability of Mountain Plover nest site use decreases because Mountain Plovers tend to prefer flat landscapes with bare ground exposure and sparse vegetation (found in paragraph 2 of the introduction).
+**Visual obstruction** Visual obstruction is a continuous variable where each observation is an individual measurement, explained in the data collection subsection of the methods section in paragraph 3. As visual obstruction increases, the probability of Mountain Plover nest site use decreases because Mountain Plovers tend to prefer flat landscapes with bare ground exposure and sparse vegetation (found in paragraph 2 of the introduction).
 
-**Distance to prairie dog colony edge** Distance to prairie dog colony edge is also a continuous variable, found in the modeling framework subsection of the methods section in paragraph 1. As distance to colony edge increases, the probability of Mountain Plover nest site decreases because vegetation height and shrub cover are higher outside of prarie dog colonies where Mountain Plovers prefer to nest (found in the 3rd paragraph of the discussion).
+**Distance to prairie dog colony edge** Distance to prairie dog colony edge is also a continuous variable, found in the modeling framework subsection of the methods section in paragraph 1. As distance to colony edge increases, the probability of Mountain Plover nest site decreases because vegetation height and shrub cover are higher outside of prairie dog colonies where Mountain Plovers prefer to nest (found in the 3rd paragraph of the discussion).
 
 ## 3c. Table of models
 
@@ -137,6 +136,40 @@ In this data set, the 1s and 0s represent mountain plover presence/absence at a 
 | 3 | X |  | visual obstruction only |
 
 ## 3d. Run the models
+
+```{r}
+#| label: running models
+#| echo: FALSE
+
+#cleaning data
+mopl_clean <- mopl |> 
+  clean_names() |> 
+  mutate(used_bin = case_match(id,
+                               "used" ~ 1,
+                               "available" ~ 0)) |> 
+  select(used_bin, edgedist, vo_nest)
+
+#model 0 - no predictors
+mod0 <- glm(used_bin ~ 1,
+            data = mopl_clean,
+            family = "binomial")
+
+#model 1 - all predictors
+mod1 <- glm(used_bin ~ edgedist + vo_nest,
+            data = mopl_clean,
+            family = "binomial")
+
+#model 2 - only prairie distance
+mod2 <- glm(used_bin ~ edgedist,
+            data = mopl_clean,
+            family = "binomial")
+
+#model 3 - only visual obstruction
+mod3 <- glm(used_bin ~ vo_nest,
+            data = mopl_clean,
+            family = "binomial")
+```
+
 
 ## 3e. Select the best model
 
