@@ -150,7 +150,6 @@ Distance to prairie dog colony edge is also a continuous variable, found in the 
 
 ```{r}
 #| label: running models
-#| echo: FALSE
 
 #cleaning data
 mopl_clean <- mopl |> # creating new mopl_clean object from mopl data frame
