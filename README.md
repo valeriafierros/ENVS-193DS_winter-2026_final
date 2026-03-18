@@ -17,4 +17,4 @@ What code is there, and what does it do?
 My code is all included in the code folder; it is a Quarto document with the assignment requirements. The code folder also includes the rendered html file for my rendered final doc. 
 
 Rendered output: 
-[here is the link to my rendered html :)]()
+[here is the link to my rendered html :)](https://valeriafierros.github.io/ENVS-193DS_winter-2026_final/code/envs193ds-final.html)
