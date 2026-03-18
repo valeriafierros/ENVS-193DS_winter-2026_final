@@ -59,25 +59,25 @@ Another variable that could influence the flooded area of a wetland is local wet
 #| label: cleaning data
 
 #cleaning data for problem 2
-kelp_clean <- kelp |> 
-  clean_names() |> 
-  filter(site %in% c("IVEE", "NAPL", "CARP")) |> 
-  filter(!(date =="2000-09-22" & transect == "6" & quad == "40")) |> 
-  mutate(site_name = case_when(
+kelp_clean <- kelp |> #creating new clean kelp object from kelp df
+  clean_names() |> # function 3: cleaning column names
+  filter(site %in% c("IVEE", "NAPL", "CARP")) |> # function 6: filtering site column to only include Isla Vista, Naples, and Carpinteria
+  filter(!(date =="2000-09-22" & transect == "6" & quad == "40")) |> # function 1: filtering out frond observations from the date `2000-09-22` in transect 6 in quad 40 
+  mutate(site_name = case_when( # function 8: creating new column called site_name and turning site codes into the full names
     site == "NAPL" ~"Naples",
     site == "IVEE" ~ "Isla Vista",
     site == "CARP" ~ "Carpinteria")) |> 
-  mutate(site_name = as_factor(site_name),
+  mutate(site_name = as_factor(site_name), # function 2: making site_name a factor with 3 levels (Naples, Isla Vista, and Carpinteria)
          site_name = fct_relevel(site_name,
                                  "Naples", "Isla Vista", "Carpinteria")) |> 
-  group_by(site_name, year) |> 
-  summarize(mean_fronds = mean(fronds)) |> 
-  ungroup()
+  group_by(site_name, year) |> # function 5: grouping by site_name and year
+  summarize(mean_fronds = mean(fronds)) |> # function 7: calculating mean frond length
+  ungroup() # function 4: ungrouping site_name and year
 
 #checking data
 slice_sample(kelp_clean,
-             n = 5)
-str(kelp_clean)
+             n = 5) #displaying 5 random rows from kelp_clean data frame
+str(kelp_clean) # displaying kelp_clean data frame structure
 ```
 
 ## 2b. Understanding data
@@ -106,7 +106,7 @@ ggplot(data = kelp_clean, #using kelp_clean data
   labs(title = "Sites vary in mean kelp fronds per year", #adding title
        x = "Year", #labelling x axis
        y = "Mean kelp fronds per year", #labelling y axis
-       color = "Site")+ #renamind legend
+       color = "Site")+ #renaming legend
   theme_minimal()+ #changing theme
   theme(plot.title = element_text(hjust = 0.5), #centering the title
         text = element_text(family = "sans"), # using custom font
@@ -151,32 +151,32 @@ Distance to prairie dog colony edge is also a continuous variable, found in the 
 #| echo: FALSE
 
 #cleaning data
-mopl_clean <- mopl |> 
-  clean_names() |> 
-  mutate(used_bin = case_match(id,
+mopl_clean <- mopl |> # creating new mopl_clean object from mopl data frame
+  clean_names() |> # cleaning column names
+  mutate(used_bin = case_match(id, # creating new used_bin column and creating binomial variables where used = 1 and available = 0
                                "used" ~ 1,
                                "available" ~ 0)) |> 
-  select(used_bin, edgedist, vo_nest)
+  select(used_bin, edgedist, vo_nest) #selecting 3 desired columns
 
 #model 0 - no predictors
-mod0 <- glm(used_bin ~ 1,
-            data = mopl_clean,
-            family = "binomial")
+mod0 <- glm(used_bin ~ 1, #running glm with no predictors
+            data = mopl_clean, #using cleaned data frame
+            family = "binomial") #setting binomial distribution
 
 #model 1 - all predictors
-mod1 <- glm(used_bin ~ edgedist + vo_nest,
-            data = mopl_clean,
-            family = "binomial")
+mod1 <- glm(used_bin ~ edgedist + vo_nest, #running glm with both predictors (visual obstructions and edge distance)
+            data = mopl_clean, # using cleaned data frame
+            family = "binomial") #setting binomial distribution
 
 #model 2 - only prairie distance
-mod2 <- glm(used_bin ~ edgedist,
-            data = mopl_clean,
-            family = "binomial")
+mod2 <- glm(used_bin ~ edgedist, # running glm with only edge distance as a predictor
+            data = mopl_clean, #using cleaned data frame
+            family = "binomial") #setting binomial distribution
 
 #model 3 - only visual obstruction
-mod3 <- glm(used_bin ~ vo_nest,
-            data = mopl_clean,
-            family = "binomial")
+mod3 <- glm(used_bin ~ vo_nest, #running glm with only visual obstructions as a predictor
+            data = mopl_clean, #using cleaned data frame
+            family = "binomial") #setting binomial distribution
 ```
 
 ## 3e. Select the best model
@@ -184,8 +184,8 @@ mod3 <- glm(used_bin ~ vo_nest,
 ```{r}
 #| label: running AICc
 
-AICc(mod0, mod1, mod2, mod3) |> 
-  arrange(AICc)
+AICc(mod0, mod1, mod2, mod3) |> #running AIC for all 4 models
+  arrange(AICc) # arranging model AICc from lowest to highest scores
 
 ```
 
@@ -198,7 +198,7 @@ The best model was determined by Akaike's Information Criterion (AIC) to be mode
 #| fig-height: 6
 #| fig-width: 8
 
-plot(simulateResiduals(mod3))
+plot(simulateResiduals(mod3)) #plotting QQ plot and residual vs predicted with DHARMa using model 3
 
 ```
 
@@ -206,36 +206,36 @@ plot(simulateResiduals(mod3))
 
 ```{r}
 #| label: visualizing model prediction
-#| fig-height: 6
-#| fig-width: 8
 
-mod_preds <- ggpredict(mod3,
-                       terms = "vo_nest")
-ggplot(mopl_clean,
-       aes(x = vo_nest,
-           y = used_bin))+
-  geom_point(size = 3,
-             alpha = 0.5,
-             color = "hotpink2")+
-  geom_line(data = mod_preds,
-            aes(x = x,
-                y = predicted,
-                color = "red"))+
-  geom_ribbon(data = mod_preds,
-              aes(x = x,
-                  y = predicted,
-                  ymin = conf.low,
-                  ymax = conf.high),
-              alpha = 0.3,
-              fill = "pink")+
-  theme_minimal()+
-  theme(panel.grid = element_blank(),
-        panel.background = element_blank(),
-        legend.position = "none")+
-  labs(title = "Mod3: As visual obstructions increase, Mountain Plover nesting site use decreases",
-       x = "Visual Obstruction",
-       y = "Nest Site Use")+
-  scale_y_continuous(breaks = c(0,1))
+mod_preds <- ggpredict(mod3,#creating new prediction object using model 3
+                       terms = "vo_nest") #using visual observation as predictor
+
+#creating ggplot: base layer
+ggplot(mopl_clean, #using clean mopl data frame
+       aes(x = vo_nest, #setting x acis
+           y = used_bin))+ #setting y axis
+  geom_point(size = 3, #adding data points and setting size
+             alpha = 0.5, #transparency of data points
+             color = "hotpink2")+ #making points pink
+  geom_line(data = mod_preds, #adding trendline of predictions
+            aes(x = x, #x axis
+                y = predicted, #y axis
+                color = "red"))+ #making trendline red
+  geom_ribbon(data = mod_preds, #adding confidence interval from model prediction
+              aes(x = x, #x axis
+                  y = predicted, #y axis
+                  ymin = conf.low, #lower CI range
+                  ymax = conf.high), #upper CI range
+              alpha = 0.3, #ribbon transparency
+              fill = "pink")+ #ribbon color
+  theme_minimal()+ #changing theme
+  theme(panel.grid = element_blank(), #removing gridlines
+        panel.background = element_blank(), #making background blank
+        legend.position = "none")+ #removing legend
+  labs(title = "Mod3: As visual obstructions increase, Mountain Plover nesting site use decreases", # plot title
+       x = "Visual Obstruction (dm)", #labelling x axis
+       y = "Nest Site Use")+ # labelling y axis
+  scale_y_continuous(breaks = c(0,1)) #setting y axis interval (0 to 1)
   
   
 ```
@@ -247,8 +247,8 @@ ggplot(mopl_clean,
 ## 3i. Calculate model predictions
 
 ```{r}
-ggpredict(mod3,
-          terms = "vo_nest[0]")
+ggpredict(mod3, #using model 3 for prediction
+          terms = "vo_nest[0]") #predicting when visual obstructions equal 0
 ```
 
 ## 3j. Interpret your results
@@ -270,44 +270,44 @@ I think that an appropriate analysis for this would be a two-sample t-test to te
 ```{r}
 #| include: false
 
-steps <- steps |> 
+steps <- steps |> #using step data
   mutate(day.of.week = factor(day.of.week,
-                              levels = c("M", "T", "W", "Th", "F", "Sa", "Su")))
+                              levels = c("M", "T", "W", "Th", "F", "Sa", "Su"))) #making day of week into factors with 7 levels
 
-wvw_steps <- steps |> 
-  clean_names() |> 
+wvw_steps <- steps |> #creating new weekday vs weekend df
+  clean_names() |> #cleaning column names
   mutate(day_of_week = case_when(
-    day_of_week %in% c("Sa", "Su") ~ "Weekend",
-    TRUE ~ "Weekday"
-  ))
+    day_of_week %in% c("Sa", "Su") ~ "Weekend", 
+    TRUE ~ "Weekday")) #making M-F weekday and S&S weekend
 ```
 
 ### Checking assumptions:
 
 ```{r}
 #| label: checking assumptions
-#checking distribution of residuals
+
+#checking distribution/normaliy with a histogram
 hist(wvw_steps$steps_taken) #normal
 
 #boxplot to check spread and outliers
-ggplot(wvw_steps,
-       aes(x = day_of_week,
-           y = steps_taken))+
-  geom_boxplot() #normal
+ggplot(wvw_steps, #using day type df
+       aes(x = day_of_week, #x axis
+           y = steps_taken))+ #y axis
+  geom_boxplot() #normal boxplot
 
 #checking homogeneity of variance
-var.test(steps_taken ~ day_of_week,
-         data = wvw_steps) #normal
+var.test(steps_taken ~ day_of_week, #steps vs day type
+         data = wvw_steps) #step data
 ```
 
 ### running the analysis (t-test)
 
 ```{r}
-#running t-test
-t.test(steps_taken~day_of_week,
+#running t-test with step data
+t.test(steps_taken~day_of_week, 
        data = wvw_steps)
 
-#calculating effect size
+#calculating effect size with Cohen's d
 cohen.d(steps_taken ~ day_of_week,
         data = wvw_steps)
 ```
@@ -315,26 +315,30 @@ cohen.d(steps_taken ~ day_of_week,
 ## 4d. Create a visualization
 
 ```{r}
-ggplot(wvw_steps, aes(x = day_of_week,
-                      y = steps_taken,
-                      fill = day_of_week))+
-  geom_boxplot(outlier.shape = NA,
-               alpha = 0.7)+
-  geom_jitter(width = 0.15,
-              size = 2,
-              alpha = 0.6,
-              shape = 21)+
-  scale_fill_manual(values = c("Weekday" = "dodgerblue",
-                               "Weekend" = "orchid"))+
-  labs(title = "Step Count by Day Type (Weekday versus Weekend)",
-       x = "Day Type",
-       y = "Step Count (steps)")+
-  theme_minimal()+
-  theme(legend.position = "none")+
-  stat_summary(fun = mean,
-               geom = "point",
-               size = 4,
-               color = "hotpink")
+#| label: creating personal data visualization
+
+#base layer
+ggplot(wvw_steps, #using step data
+       aes(x = day_of_week, #x axis
+                      y = steps_taken, #y axis
+                      fill = day_of_week))+ #coloring by day of week type
+  geom_boxplot(outlier.shape = 4, #outlier shape (no outliers)
+               alpha = 0.7)+ # boxtransparency 
+  geom_jitter(width = 0.15, #controlling jitter (how much points can move horizontally)
+              size = 2, #point size
+              alpha = 0.6, #point transparency
+              shape = 21)+ #point shape
+  scale_fill_manual(values = c("Weekday" = "dodgerblue", #changing weekday color
+                               "Weekend" = "orchid"))+ #changing weekend color
+  labs(title = "Step Count by Day Type (Weekday versus Weekend)", #titling plot
+       x = "Day Type", #x axis
+       y = "Step Count (steps)")+ #y axis
+  theme_minimal()+ #changing theme
+  theme(legend.position = "none")+ #removing legend
+  stat_summary(fun = mean, #adds mean of each y value for each x group
+               geom = "point", #adds mean as a point
+               size = 4, #size of point
+               color = "hotpink") #color of point
   
 
 ```
