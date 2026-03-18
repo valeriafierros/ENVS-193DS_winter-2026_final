@@ -246,8 +246,11 @@ The predicted probability of Mountain Plover nest site occupancy at no visual ob
 
 # Problem 4. Affective and exploratory visualizations
 ## 4a. Comparing visualizations
+In homework 2, I visualized my data using bar graphs and a scatterplot. In homework 3, I did the same thing, but updated the data with all of my observations.  In the bar graph, the final graph showed the full range of observations; with the limited data in homework 2, it showed that Monday had the highest number of steps, but in my final visualization we see that I had the greatest number of steps on Thursdays. There was also a different pattern on my scatterplot. The initial plot showed a decrease in step count over time, but the final plot shows that there is no visible correlation between date and steps taken. I think that this data would be better visualized by a boxplot instead, so if we were to make another visualization, that's what I would do (which is also feedback I got from my classmates during week 9 workshop). 
+In my affective visualization, you can see the pattern/correlation between day of the week and step count better like in the bar graph, though the bar graph uses total step count for the day and the affective visualization uses individial/daily counts.
 
 ## 4b. Designing an analysis
+I think that an appropriate anaylsis for this would be a one-way ANOVA to test whether my daily step count differs between weekdays vs weekends. This analysis would be suitable because step count is continuous and the predictor is categorical. 
 
 ## 4c. Check any assumptions and run your analysis
 
