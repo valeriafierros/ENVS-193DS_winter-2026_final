@@ -198,15 +198,43 @@ plot(simulateResiduals(mod3))
 ## 3g. Visualize the model predictions
 ```{r}
 #| label: visualizing model prediction
+#| fig-height: 6
+#| fig-width: 8
 
 mod_preds <- ggpredict(mod3,
                        terms = "vo_nest")
-
+ggplot(mopl_clean,
+       aes(x = vo_nest,
+           y = used_bin))+
+  geom_point(size = 3,
+             alpha = 0.5,
+             color = "hotpink2")+
+  geom_line(data = mod_preds,
+            aes(x = x,
+                y = predicted,
+                color = "red"))+
+  geom_ribbon(data = mod_preds,
+              aes(x = x,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high),
+              alpha = 0.3,
+              fill = "pink")+
+  theme_minimal()+
+  theme(panel.grid = element_blank(),
+        panel.background = element_blank(),
+        legend.position = "none")+
+  labs(title = "Mod3: As visual obstructions increase, Mountain Plover nesting site use decreases",
+       x = "Visual Obstruction",
+       y = "Nest Site Use")+
+  scale_y_continuous(breaks = c(0,1))
+  
+  
 ```
 
 
-
 ## 3h. Write a caption for your figure
+**Figure 1. As visual obstructions increase, Mountain Plover nesting site use decreases.** Each pink point represents an individual obseration of nest presence. The red line represents the probability of a nesting site being present as visual obstructions increase where 1 = 100% and 0 = 0%, and the pink ribbon (shaded area) around the line is the calculated 95% confidence interval. Nest site use is recorded as a binary variable with no use represented by 0 and used represented by 1. Data from: Courtney J Duchardt, Jeffrey L Beck, David J Augustine, Mountain Plover habitat selection and nest survival in relation to weather variability and spatial attributes of black-tailed prairie dog disturbance, The Condor: Ornithological Applications, Volume 122, Issue 1, 3 February 2020, duz059, https://doi.org/10.1093/condor/duz059
 
 ## 3i. Calculate model predictions
 
