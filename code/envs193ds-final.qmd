@@ -25,6 +25,7 @@ library(ggplot2)
 library(MuMIn)
 library(DHARMa)
 library(ggeffects)
+library(effsize)
 
 #reading in data here for problem 2
 kelp <- read.csv("../data/kelp_data.csv")
@@ -250,7 +251,7 @@ In homework 2, I visualized my data using bar graphs and a scatterplot. In homew
 In my affective visualization, you can see the pattern/correlation between day of the week and step count better like in the bar graph, though the bar graph uses total step count for the day and the affective visualization uses individial/daily counts.
 
 ## 4b. Designing an analysis
-I think that an appropriate anaylsis for this would be a one-way ANOVA to test whether my daily step count differs between weekdays vs weekends. This analysis would be suitable because step count is continuous and the predictor is categorical. 
+I think that an appropriate anaylsis for this would be a t-test to test whether my daily step count differs between weekdays vs weekends. This analysis would be suitable because step count is continuous and the predictor is categorical. 
 
 ## 4c. Check any assumptions and run your analysis
 
@@ -285,9 +286,24 @@ ggplot(wvw_steps,
 var.test(steps.taken ~ day.of.week,
          data = wvw_steps)
 ```
+### running the analysis (t-test)
+```{r}
+#running t-test
+t.test(steps.taken~day.of.week,
+       data = wvw_steps)
+
+#calculating effect size
+cohen.d(steps.taken ~ day.of.week,
+        data = wvw_steps)
+```
 
 
 ## 4d. Create a visualiztion
+```{r}
+
+
+```
+
 
 ## 4e. Write a caption
 
