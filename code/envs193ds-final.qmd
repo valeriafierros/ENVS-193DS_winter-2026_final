@@ -118,6 +118,17 @@ Isla vista has the most variable mean kelp fronds per year; its line shows the l
 In this data set, the 1s and 0s represent mountain plover presence/absence at a given nesting site when surveyed. A 1 means the species was observed while a 0 means there was no plover present at the time of the survey. 
 
 ## 3b. Purpose of study
+- effects of visual obstruction and distance to prairie dog colony edge
+- describe: 
+1. what kind of variable it is
+2. how it could possibly influence the probability of mountain plover nest site use (as visual obstruction increases, the probability of Mountain Plover nest site use ____ because)
+3. where did i find this info? (section, subsection, and paragraph)
+
+**Visual obstruction**
+Visual obstruction is a continuous variable where each observation is an individual measurement, explained in the data collection subsection of the methods section in paragraph 3. As visual obsruction increases, the probability of Mountain Plover nest site use decreases because Mountain Plovers tend to prefer flat landscapes with bare ground exposure and sparse vegetation (found in paragraph 2 of the introduction). 
+
+**Distance to prairie dog colony edge**
+Distance to prairie dog colony edge is also a continuous variable, found in the modeling framework subsection of the methods section in paragraph 1. As distance to colony edge increases, the probability of Mountain Plover nest site decreases 
 
 ## 3c. Table of models
 
