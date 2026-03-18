@@ -254,6 +254,39 @@ I think that an appropriate anaylsis for this would be a one-way ANOVA to test w
 
 ## 4c. Check any assumptions and run your analysis
 
+```{r}
+#| include: false
+
+steps <- steps |> 
+  mutate(day.of.week = factor(day.of.week,
+                              levels = c("M", "T", "W", "Th", "F", "Sa", "Su")))
+
+wvw_steps <- steps |> 
+  mutate(day.of.week = case_when(
+    day.of.week %in% c("Sa", "Su") ~ "Weekend",
+    TRUE ~ "Weekday"
+  ))
+```
+
+
+### Checking assumptions:
+```{r}
+#| label: checking assumptions
+#checking distribution of residuals
+hist(wvw_steps$steps.taken) #normal
+
+#boxplot to check spread and outliers
+ggplot(wvw_steps,
+       aes(x = day.of.week,
+           y = steps.taken))+
+  geom_boxplot()
+
+#checking homogeneity of variance
+var.test(steps.taken ~ day.of.week,
+         data = wvw_steps)
+```
+
+
 ## 4d. Create a visualiztion
 
 ## 4e. Write a caption
