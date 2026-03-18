@@ -263,8 +263,9 @@ steps <- steps |>
                               levels = c("M", "T", "W", "Th", "F", "Sa", "Su")))
 
 wvw_steps <- steps |> 
-  mutate(day.of.week = case_when(
-    day.of.week %in% c("Sa", "Su") ~ "Weekend",
+  clean_names() |> 
+  mutate(day_of_week = case_when(
+    day_of_week %in% c("Sa", "Su") ~ "Weekend",
     TRUE ~ "Weekday"
   ))
 ```
@@ -274,33 +275,53 @@ wvw_steps <- steps |>
 ```{r}
 #| label: checking assumptions
 #checking distribution of residuals
-hist(wvw_steps$steps.taken) #normal
+hist(wvw_steps$steps_taken) #normal
 
 #boxplot to check spread and outliers
 ggplot(wvw_steps,
-       aes(x = day.of.week,
-           y = steps.taken))+
+       aes(x = day_of_week,
+           y = steps_taken))+
   geom_boxplot()
 
 #checking homogeneity of variance
-var.test(steps.taken ~ day.of.week,
+var.test(steps_taken ~ day_of_week,
          data = wvw_steps)
 ```
 ### running the analysis (t-test)
 ```{r}
 #running t-test
-t.test(steps.taken~day.of.week,
+t.test(steps_taken~day_of_week,
        data = wvw_steps)
 
 #calculating effect size
-cohen.d(steps.taken ~ day.of.week,
+cohen.d(steps_taken ~ day_of_week,
         data = wvw_steps)
 ```
 
 
 ## 4d. Create a visualiztion
 ```{r}
-
+ggplot(wvw_steps, aes(x = day_of_week,
+                      y = steps_taken,
+                      fill = day_of_week))+
+  geom_boxplot(alpha = 0.5,
+               outlier.shape = NA)+
+  geom_jitter(width = 0.15,
+              size = 2,
+              alpha = 0.6,
+              color = "black")+
+  scale_fill_manual(values = c("Weekday" = "dodgerblue",
+                               "Weekend" = "orchid"))+
+  labs(title = "Step Count by Day Type",
+       x = "Day Type",
+       y = "Step Count (steps)")+
+  theme_minimal()+
+  theme(legend.position = "none")+
+  stat_summary(fun = mean,
+               geom = "point",
+               size = 4,
+               color = "hotpink")
+  
 
 ```
 
