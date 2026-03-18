@@ -248,6 +248,8 @@ ggplot(mopl_clean, #using clean mopl data frame
 ## 3i. Calculate model predictions
 
 ```{r}
+#| label: calculating model predictions
+
 ggpredict(mod3, #using model 3 for prediction
           terms = "vo_nest[0]") #predicting when visual obstructions equal 0
 ```
@@ -269,6 +271,7 @@ I think that an appropriate analysis for this would be a two-sample t-test to te
 ## 4c. Check any assumptions and run your analysis
 
 ```{r}
+#| label: cleaning and mutating personal data
 #| include: false
 
 steps <- steps |> #using step data
@@ -304,6 +307,7 @@ var.test(steps_taken ~ day_of_week, #steps vs day type
 ### running the analysis (t-test)
 
 ```{r}
+#| label: running analysis
 #running t-test with step data
 t.test(steps_taken~day_of_week, 
        data = wvw_steps)
