@@ -29,6 +29,7 @@ library(ggeffects)
 #reading in data here for problem 2
 kelp <- read.csv("../data/kelp_data.csv")
 mopl <- read.csv("../data/mopl.csv")
+steps <- read.csv("../data/cyopersonaldata - Sheet1.csv")
 ```
 
 # Problem 1: Research writing
@@ -118,10 +119,8 @@ ggplot(data = kelp_clean, #using kelp_clean data
 Isla vista has the most variable mean kelp fronds per year; its line shows the largest fluctuations over time with the strongest peaks and dips. The maximum points goes all the way up to \~ 40 while the minimum dips down to less than five. The site with the least variable mean kelp fronds per year is Carpinteria. The points from this site have less variation and a smaller range, with less dramatic peaks occurring. Each observation remains between the same range (\~5-20).
 
 # Problem 3. Data analysis
-
 ## 3a. Response variable
-
-In this data set, the 1s and 0s represent mountain plover presence/absence at a given nesting site when surveyed. A 1 means the species was observed while a 0 means there was no plover present at the time of the survey.
+The response variable is Mountain Plover occupancy. In this data set, the 1s and 0s represent mountain plover nest presence/absence at a given nesting site when surveyed. A 1 means the species nest was observed while a 0 means there was no nests present at the time of the survey.
 
 ## 3b. Purpose of study
 
@@ -246,7 +245,6 @@ ggpredict(mod3,
 The predicted probability of Mountain Plover nest site occupancy at no visual obstruction is 0.73, indicating that Mountain Plovers tend to use nests where there is less visual obstruction, supporting the negative relationship seen in Figure 1. This is consistent with the observations found in 3b; Mountain Plovers prefer to nest in open and sparsely vegetated habitats with less obstructions because it allows for higher visibility of predators. 
 
 # Problem 4. Affective and exploratory visualizations
-
 ## 4a. Comparing visualizations
 
 ## 4b. Designing an analysis
