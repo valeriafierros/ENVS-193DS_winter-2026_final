@@ -11,7 +11,7 @@ It is my (Valeria's) repo on GitHub; I am the sole contributor.
 
 ## Data and file info: 
 What files are there? 
-There is a code folder with my html and .qmd files, a data folder that includes 
+There is a code folder with my html and .qmd files, a data folder that includes kelp data, mountain plover data, and my personal data.
 
 What code is there, and what does it do? 
 My code is all included in the code folder; it is a Quarto document with the assignment requirements. The code folder also includes the rendered html file for my rendered final doc. 
