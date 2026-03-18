@@ -39,15 +39,17 @@ steps <- read.csv("../data/cyopersonaldata - Sheet1.csv")
 
 In part 1, they used a simple linear regression to determine whether precipitation predicts wetland flooding. In part 2, they used a Kruskal-Wallis test to determine whether median flooded wetland area differs across various levels of water year classifications.
 
-##1b. Figure needed They can use a boxplot to visualize these results. Because there are multiple predictors/levels, the x-axis should show the water year classification categories (wet, above normal, below normal, dry, critical drought). The y-axis should show the response variable, which would be flooded wetland area (m²). Each category on the x-axis would have its own boxplot to display the interquartile range, median, and spread of the data.
+## 1b. Figure needed 
 
-## c. Suggestions for rewriting
+They can use a boxplot to visualize these results. Because there are multiple predictors/levels, the x-axis should show the water year classification categories (wet, above normal, below normal, dry, critical drought). The y-axis should show the response variable, which would be flooded wetland area (m²). Each category on the x-axis would have its own boxplot to display the interquartile range, median, and spread of the data.
+
+## 1c. Suggestions for rewriting
 
 (1) Precipitation was not a strong predictor of flooded wetland area in the San Joaquin River Delta (simple linear regression, F(df model, df error) = test statistic, $R^2$ = effect size, p = 0.11, $\alpha$ = significance level).
 
-(2) There is no significant difference in median flooded wetland area between water year classifications (wet, above normal, below normal, dry, critical drought)(Kruskal-Wallis test, $X^2$(4) = test statistic,p = 0.12, $\alpha$ = significance level).
+(2) There is no significant difference in median flooded wetland area between water year classifications (wet, above normal, below normal, dry, critical drought)(Kruskal-Wallis test, $X^2$(4) = test statistic, p = 0.12, $\alpha$ = significance level).
 
-## d. Interpretation
+## 1d. Interpretation
 
 Another variable that could influence the flooded area of a wetland is local wetland management practices. This variable would be categorical (managed vs unmanaged) or ordinal (levels of management/intervention). It could influence flooding because management decisions can directly influence water flow and retention in wetlands. For example, higher water retention due to lack of vegetation in wetlands could increase flooding.
 

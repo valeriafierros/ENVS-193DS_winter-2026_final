@@ -117,8 +117,9 @@ window.Quarto = {
   <li><a href="#problem-1-research-writing" id="toc-problem-1-research-writing" class="nav-link" data-scroll-target="#problem-1-research-writing">Problem 1: Research writing</a>
   <ul class="collapse">
   <li><a href="#a.-transparent-statistical-methods" id="toc-a.-transparent-statistical-methods" class="nav-link" data-scroll-target="#a.-transparent-statistical-methods">1a. Transparent statistical methods</a></li>
-  <li><a href="#c.-suggestions-for-rewriting" id="toc-c.-suggestions-for-rewriting" class="nav-link" data-scroll-target="#c.-suggestions-for-rewriting">c.&nbsp;Suggestions for rewriting</a></li>
-  <li><a href="#d.-interpretation" id="toc-d.-interpretation" class="nav-link" data-scroll-target="#d.-interpretation">d.&nbsp;Interpretation</a></li>
+  <li><a href="#b.-figure-needed" id="toc-b.-figure-needed" class="nav-link" data-scroll-target="#b.-figure-needed">1b. Figure needed</a></li>
+  <li><a href="#c.-suggestions-for-rewriting" id="toc-c.-suggestions-for-rewriting" class="nav-link" data-scroll-target="#c.-suggestions-for-rewriting">1c. Suggestions for rewriting</a></li>
+  <li><a href="#d.-interpretation" id="toc-d.-interpretation" class="nav-link" data-scroll-target="#d.-interpretation">1d. Interpretation</a></li>
   </ul></li>
   <li><a href="#problem-2.-data-visualization" id="toc-problem-2.-data-visualization" class="nav-link" data-scroll-target="#problem-2.-data-visualization">Problem 2. Data visualization</a>
   <ul class="collapse">
@@ -214,17 +215,20 @@ window.Quarto = {
 <section id="a.-transparent-statistical-methods" class="level2">
 <h2 class="anchored" data-anchor-id="a.-transparent-statistical-methods">1a. Transparent statistical methods</h2>
 <p>In part 1, they used a simple linear regression to determine whether precipitation predicts wetland flooding. In part 2, they used a Kruskal-Wallis test to determine whether median flooded wetland area differs across various levels of water year classifications.</p>
-<p>##1b. Figure needed They can use a boxplot to visualize these results. Because there are multiple predictors/levels, the x-axis should show the water year classification categories (wet, above normal, below normal, dry, critical drought). The y-axis should show the response variable, which would be flooded wetland area (m²). Each category on the x-axis would have its own boxplot to display the interquartile range, median, and spread of the data.</p>
+</section>
+<section id="b.-figure-needed" class="level2">
+<h2 class="anchored" data-anchor-id="b.-figure-needed">1b. Figure needed</h2>
+<p>They can use a boxplot to visualize these results. Because there are multiple predictors/levels, the x-axis should show the water year classification categories (wet, above normal, below normal, dry, critical drought). The y-axis should show the response variable, which would be flooded wetland area (m²). Each category on the x-axis would have its own boxplot to display the interquartile range, median, and spread of the data.</p>
 </section>
 <section id="c.-suggestions-for-rewriting" class="level2">
-<h2 class="anchored" data-anchor-id="c.-suggestions-for-rewriting">c.&nbsp;Suggestions for rewriting</h2>
+<h2 class="anchored" data-anchor-id="c.-suggestions-for-rewriting">1c. Suggestions for rewriting</h2>
 <ol type="1">
 <li><p>Precipitation was not a strong predictor of flooded wetland area in the San Joaquin River Delta (simple linear regression, F(df model, df error) = test statistic, <span class="math inline">\(R^2\)</span> = effect size, p = 0.11, <span class="math inline">\(\alpha\)</span> = significance level).</p></li>
-<li><p>There is no significant difference in median flooded wetland area between water year classifications (wet, above normal, below normal, dry, critical drought)(Kruskal-Wallis test, <span class="math inline">\(X^2\)</span>(4) = test statistic,p = 0.12, <span class="math inline">\(\alpha\)</span> = significance level).</p></li>
+<li><p>There is no significant difference in median flooded wetland area between water year classifications (wet, above normal, below normal, dry, critical drought)(Kruskal-Wallis test, <span class="math inline">\(X^2\)</span>(4) = test statistic, p = 0.12, <span class="math inline">\(\alpha\)</span> = significance level).</p></li>
 </ol>
 </section>
 <section id="d.-interpretation" class="level2">
-<h2 class="anchored" data-anchor-id="d.-interpretation">d.&nbsp;Interpretation</h2>
+<h2 class="anchored" data-anchor-id="d.-interpretation">1d. Interpretation</h2>
 <p>Another variable that could influence the flooded area of a wetland is local wetland management practices. This variable would be categorical (managed vs unmanaged) or ordinal (levels of management/intervention). It could influence flooding because management decisions can directly influence water flow and retention in wetlands. For example, higher water retention due to lack of vegetation in wetlands could increase flooding.</p>
 </section>
 </section>
@@ -256,11 +260,11 @@ window.Quarto = {
 <pre><code># A tibble: 5 × 3
   site_name    year mean_fronds
   &lt;fct&gt;       &lt;int&gt;       &lt;dbl&gt;
-1 Carpinteria  2023        4.50
-2 Isla Vista   2013        9.36
-3 Carpinteria  2007       10.3 
-4 Isla Vista   2011        9.63
-5 Naples       2005       10.2 </code></pre>
+1 Naples       2009        5.44
+2 Naples       2017        4.74
+3 Naples       2015       10.6 
+4 Carpinteria  2013        2.93
+5 Carpinteria  2003        5.27</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(kelp_clean) <span class="co"># displaying kelp_clean data frame structure</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
