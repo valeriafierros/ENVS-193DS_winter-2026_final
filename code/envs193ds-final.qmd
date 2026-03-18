@@ -281,11 +281,11 @@ hist(wvw_steps$steps_taken) #normal
 ggplot(wvw_steps,
        aes(x = day_of_week,
            y = steps_taken))+
-  geom_boxplot()
+  geom_boxplot() #normal
 
 #checking homogeneity of variance
 var.test(steps_taken ~ day_of_week,
-         data = wvw_steps)
+         data = wvw_steps) #normal
 ```
 ### running the analysis (t-test)
 ```{r}
@@ -327,9 +327,10 @@ ggplot(wvw_steps, aes(x = day_of_week,
 
 
 ## 4e. Write a caption
+**Figure 2. Mean daily step count is greater during weekdays versus weekends.** The boxplots show the differences in daily step count between weekdays and weekends. They show the distribution of daily step counts for weekdays and weekends, with the boxes representing the interquartile range (blue = weekday, purple = weekend) and the horizontal line indicating the median. Individual observations are overlaid as black jittered points to display the underlying data. The pink points are the mean step count for each group.   
 
 ## 4f. Write about your results
+Daily step count differed significantly between weekdays and weekend, with more activity (steps) on weekdays versus weekends. On average, my step counts were substantially higher on weekdays (mean = 6749 steps) compared to weekends (mean = 2527 steps). The difference was statistically significant (Welch's two-sample t-test, t(26.789) = 7.45, 95% CI: [3060.547, 5384.587], p = 5.304e-08, $\alpha$ = 0.05) and associated with a large effect size (Cohen's d = 2.23), indicating a strong difference in activity leels between day types. 
 
 ## 4g. Sharing your affective visualization
-
 \~ done :) \~
